@@ -13,7 +13,7 @@ class Card:
             self.isAce == True
 
     def __str__(self):
-        return "Your card is %s of %s" % (self.stringValue,self.suit)
+        return "%s of %s" % (self.stringValue,self.suit)
         
     def getValue(self): #return the value of the card
         return self.intValue

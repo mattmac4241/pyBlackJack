@@ -12,7 +12,7 @@ class Deck:
             for v in values:
                 card = Card(s,v)
                 self.deck.append(card) 
-    
+        self.shuffle()
     #return the deck
     def getDeck(self):
         return self.deck            
