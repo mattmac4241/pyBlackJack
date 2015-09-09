@@ -20,25 +20,27 @@ class Game(object):
     def game(self):
         self.deal(self.player1) #deal cards to player1
         self.deal(self.dealer) #deal cards to dealer
-        self.hitOrStand(self.player1)
-        if self.busted(self.player1) == False:
-            self.dealerStandOrHit(self.dealer)   
+        if self.blackjack(self.player1) == False:
+            self.hitOrStand(self.player1)
+            if self.busted(self.player1) == False:
+                self.dealerStandOrHit(self.dealer)   
         
-            if(self.busted(self.dealer) == False):
-                self.checkWinner()
-            else:
-                print "DEALER BUSTED YOU WON!"
+                if(self.busted(self.dealer) == False):
+                    self.checkWinner(self.player1,self.dealer)
+                else:
+                    print "DEALER BUSTED YOU WON!"
 
 
     #deal out two cards to a player
     def deal(self,player):
         for i in range(2):
             self.dealCard(player)
-            if (player.getScore() == 21)and (player.isDealer() == False):
+            if (player.getScore() == 21) and (player.isDealer == False):
                 print 'BLACKJACK! YOU WIN!'
 
     #check if player score is greater then 21
-    def busted(self,player):
+    @staticmethod
+    def busted(player):
         if player.score >21:
             return True
         else:
@@ -63,11 +65,13 @@ class Game(object):
             else:       
                 print "BUSTED!! YOU LOOSE!!"
     
+
     #check which player won
-    def checkWinner(self):
-        print self.dealer.strHand()
-        pScore = self.player1.score #player's score
-        dScore = self.dealer.score  #dealer's score
+    @staticmethod
+    def checkWinner(player1,dealer):
+        print dealer.strHand()
+        pScore = player1.score #player's score
+        dScore = dealer.score  #dealer's score
         if pScore > dScore:
             print "YOU WIN!!!!"
         elif pScore < dScore:
@@ -79,7 +83,12 @@ class Game(object):
     def dealerStandOrHit(self,player):
         if player.getScore() < 17:
             self.dealCard(player)
-
-
+    
+    @staticmethod
+    def blackjack(player):
+        if player.getScore() == 21:
+            return True
+        else:
+            return False
 
 game = Game()

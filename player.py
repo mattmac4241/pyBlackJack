@@ -1,4 +1,3 @@
-
 '''Player class represents a player for the game 
 and contains the hand that the user has and the score
 also has special type dealer'''
@@ -14,21 +13,23 @@ class Player():
         self.score = 0
         self.name = name    
         self.isDealer = isDealer
+        self.hasAce = False
     def __str__(self):
         return self.name
 
-    #used for the inital hand dealt 
-    def dealtHand(self,card1,card2):         
-        self.hand.append(card1)
-        self.hand.append(card2)
-        self.score += card1.getValue() + card2.getValue()
-    
-    #delt new card
     def dealtCard(self,card):
+
+        if card.isAce() == True:
+            self.hasAce = True    
         self.hand.append(card)
-        self.score += card.getValue()
+        score = self.score + card.getValue()
+        if score > 21 and self.hasAce == True:
+            self.hasAce = False
+            self.score -= 10
+        self.score += card.getValue() 
         if self.isDealer == False:
             print 'You were dealt a %s' % card 
+            print 'Your score is %s' % str(self.score)
     #return the player's score
     def getScore(self):
         return self.score
@@ -49,3 +50,6 @@ class Player():
     def isDealer(self):
         print self.isDealer
         return self.isDealer
+
+    def hasAce(self):
+        return self.hasAce
