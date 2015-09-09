@@ -4,12 +4,14 @@ and contains the hand that the user has and the score
 also has special type dealer'''
 
 class Player():
-    score = 0 #the players hand score
-    hand = [] #contains the hand of the player
-    name = '' #The player's name
-    isDealer = False
+   # score = 0 #the players hand score
+   # hand = [] #contains the hand of the player
+   # name = '' #The player's name
+   # isDealer = False
     #setup player declaring if they are a dealer or not, dealer is the computer and the player is not
     def __init__(self,name,isDealer):
+        self.hand = []
+        self.score = 0
         self.name = name    
         self.isDealer = isDealer
     def __str__(self):
@@ -28,7 +30,7 @@ class Player():
         if self.isDealer == False:
             print 'You were dealt a %s' % card 
     #return the player's score
-    def getValue(self):
+    def getScore(self):
         return self.score
 
     def strHand(self):
@@ -43,3 +45,7 @@ class Player():
     #return the players hand
     def getHand(self):
         return self.hand
+
+    def isDealer(self):
+        print self.isDealer
+        return self.isDealer

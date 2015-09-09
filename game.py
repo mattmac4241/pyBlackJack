@@ -7,27 +7,34 @@ is greater then the dealer or the dealer goes over 21, then the user wins.
 If the dealer and player tie then it's a push and no one loses.'''
 
 
-class Game:
-    deck = None
-    player1 = None
-    dealer = None 
+class Game(object):
 
     def __init__(self):
         print "Hello, welcome to blackjack what is your name?"
         name = raw_input()
         self.player1 = Player(name,False) #Initialize the user
-        self.dealer = Player('Dealer',True)  #Initialize the dealer
+        self.dealer = Player('Dealer',True)
         self.deck = Deck() #Inititalize the deck
-        print 'Hello %s, let\'s play Blackjack' % self.player1.getName()
-        print self.dealer.getName()
+        self.game()  
+      
+    def game(self):
         self.deal(self.player1) #deal cards to player1
         self.deal(self.dealer) #deal cards to dealer
         self.hitOrStand(self.player1)
+        if self.busted(self.player1) == False:
+            self.dealerStandOrHit(self.dealer)   
+        
+            if(self.busted(self.dealer) == False):
+                self.checkWinner()
+            else:
+                print "DEALER BUSTED YOU WON!"
+
+
     #deal out two cards to a player
     def deal(self,player):
         for i in range(2):
             self.dealCard(player)
-            if (player.score == 21) and (player.isDealer == False):
+            if (player.getScore() == 21)and (player.isDealer() == False):
                 print 'BLACKJACK! YOU WIN!'
 
     #check if player score is greater then 21
@@ -47,7 +54,7 @@ class Game:
         print "Would you like to Hit or Stand?" 
         answer = raw_input()
         if answer.lower() == 'stand':
-            self.checkWinner() 
+            return
         else:    
             self.dealCard(player)
             #Check if player busted after dealing card
@@ -67,5 +74,12 @@ class Game:
             print 'Sorry,You loose!'
         else:
             print "PUSH! It's a tie!"
+
+    #dealer hits on less then 17
+    def dealerStandOrHit(self,player):
+        if player.getScore() < 17:
+            self.dealCard(player)
+
+
 
 game = Game()
